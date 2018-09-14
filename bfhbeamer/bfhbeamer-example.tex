@@ -1,0 +1,65 @@
+\documentclass[mathsf,aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage{helvet}
+\usepackage{arev}
+\usepackage{tikz}
+
+\title{Titel}
+\subtitle{Untertitel}
+\date[ISPN ’80]{Zusatzinfo wie z.B. \\ Anlass}
+%\date{\strut}
+\author[Heck]{Horst Heck \\ MNG}
+\institute{Technik und Informatik}
+% Die Titelgrafik ist 4cm auf 9.7cm gross!
+\titlegraphic{julia_escher.jpg}
+
+%Titelseite mit Grafik
+\usetheme[titelgraphik]{bfhbeamer}
+% Titelseite ohne Grafik, Hintergrund grau
+%\usetheme{bfhbeamer}
+
+
+\begin{document}
+
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	\begin{frame}[t]
+		\frametitle{Frametitle}
+		\framesubtitle{Untertitel}
+		Testing
+		\begin{itemize}
+			\item Testet
+			\begin{itemize}
+				\item \textcolor{red}{Nested} 
+				\pause
+				\item Nested
+			\end{itemize}
+			\item Test $\int f(x) \partial_x$
+		\end{itemize}
+	\end{frame}
+	
+	\part{Kapiteltrennseite}
+	\frame{\partpage}
+	
+	\section{Abschnittstrennseite}
+		\begin{frame}
+			\sectionpage
+		\end{frame}
+		\begin{frame}
+			\frametitle{Test 2}
+			gerahmter Block:
+			\begin{block}{Blocktitel}
+				        Blocktext
+			\end{block}
+			\begin{alertblock}{Alert-Blocktitel}
+				        Blocktext
+			\end{alertblock}
+			Oder man macht es mit ``rahmen'' (dann gibt es aber keinen Abstand)
+			\begin{rahmen}[frametitle={Rahmentitel}]
+				Rahmeninhalt
+			\end{rahmen}
+		\end{frame}
+\end{document}

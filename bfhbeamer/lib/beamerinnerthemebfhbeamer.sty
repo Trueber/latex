@@ -1,0 +1,161 @@
+\mode<presentation>
+\newmdenv[%
+  linewidth=1mm,
+  linecolor=bfhgrau,
+  roundcorner=0.5mm,
+  frametitlerule=true,
+  frametitlerulewidth=1pt,
+  frametitlefont=\color{bfhorange},
+  frametitlebackgroundcolor=white,
+  skipabove=\parskip,
+  skipbelow=\parskip
+  ]{rahmen}
+
+% Versuch mit den rounded templates muss die eigene Definition auskommentieren
+%\setbeamertemplate{block begin}{%
+%\vskip5pt \begin{rahmen}[frametitle={\insertblocktitle}]}
+%\setbeamertemplate{block end}{\end{rahmen}\vskip5pt}
+
+% Verschiebung für Kasten in Kapiteltrennseiten
+% (aus mir nicht bekannten Gründen setzt \useasboundingbox die 
+% bounding box effektiv nicht auf den Seitenrand)
+\newcommand{\beamer@partpageBoxShift}{0.7}
+
+% Option verarbeiten, ob Titelgraphik oder nicht
+\newif\if@dotitelgraphik
+\@dotitelgraphikfalse
+\DeclareOptionBeamer{titelgraphik}{\@dotitelgraphiktrue}
+\ProcessOptionsBeamer
+
+\if@dotitelgraphik
+  \setbeamertemplate{background}{ %Hintergrund mit Titelgraphik 
+    \ifnum\thepage=1\relax% Bewirkt, dass dieser Hintergrund nur auf der Titelseite erscheint
+      \begin{tikzpicture}
+        \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+        \node at (1.6,8.1) {\includegraphics[height=1.5cm]{BFH_Logo_A_de_fr_en_100_RGB.pdf}}; % Logo setzen
+        %\fill[color=bfhgrau] (0,0.25\the\paperheight) rectangle (0.75\the\paperwidth,0.4\the\paperheight);
+        \node at (4.85,5.05) {\includegraphics[height=4cm, width=9.7cm]{\inserttitlegraphic}};
+        \draw[rounded corners=0.2mm, color=bfhgrau,fill] (0,2.95) rectangle (9.7,3.05); %unterer Balken
+        \draw[rounded corners=0.2mm, color=bfhgrau,fill] (0,7.05) rectangle (9.7,7.15); %unterer Balken
+     \end{tikzpicture}
+   \fi
+  }
+\else
+  \setbeamertemplate{background}{ %Hintergrund für die Titelseite in grau
+    \ifnum\thepage=1\relax% % Bewirkt, dass dieser Hintergrund nur auf der Titelseite erscheint
+      \begin{tikzpicture}
+        \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+        \node at (1.6,8.1) {\includegraphics[height=1.5cm]{BFH_Logo_A_de_fr_en_100_RGB.pdf}}; % Logo setzen
+        \fill[color=bfhgrau] (0,3.0) rectangle (9.7,7.1);
+        \draw[rounded corners=0.2mm, color=bfhorange,fill] (0,2.95) rectangle (9.7,3.05); %unterer Balken
+        \draw[rounded corners=0.2mm, color=bfhorange,fill] (0,7.05) rectangle (9.7,7.15); %unterer Balken
+      \end{tikzpicture}
+    \fi
+  }
+\fi
+
+% Daten für die Titelseite setzen
+\if@dotitelgraphik
+\defbeamertemplate*{title page}{bfhbeamer}[1][]
+{
+\vskip6cm%
+    % Titel und Untertitel
+		\begin{beamercolorbox}[wd=12cm,leftskip=1mm]{Titel_Grafik}%
+			\usebeamerfont{title}\color{bfhgrau}\inserttitle\par%
+    \end{beamercolorbox}%
+		\vskip0.2cm%
+    \begin{beamercolorbox}[wd=12cm,leftskip=1mm,#1]{Untertitel_Grafik}%
+			\usebeamerfont{subtitle}\insertsubtitle\par%
+    \end{beamercolorbox}%
+}
+\else
+\defbeamertemplate*{title page}{bfhbeamer}[1][]
+{
+\vskip1.8cm%
+    % Titel und Untertitel
+		\begin{beamercolorbox}[wd=9.2cm,leftskip=1mm]{Titel}%
+      \usebeamerfont{title}\inserttitle\par%
+    \end{beamercolorbox}%
+		\vskip0.2cm%
+    \begin{beamercolorbox}[wd=9.2cm,leftskip=1mm,#1]{Untertitel}%
+      \usebeamerfont{subtitle}\insertsubtitle\par%
+    \end{beamercolorbox}%
+		% Mit dem Datum können auch andere Dinge wie z.B. Ort oder Anlass gesetzt werden 
+		\vskip0.7cm%
+    \begin{beamercolorbox}[wd=9.2cm,leftskip=1mm,#1]{Datum}
+      \insertdate%
+    \end{beamercolorbox}%
+    \vskip1.4cm%
+    \begin{beamercolorbox}[wd=9.2cm,sep=3pt,#1]{Autor}
+      \usebeamerfont{author}\insertauthor%
+    \end{beamercolorbox}%
+}
+\fi
+
+% Das ist ziemlich dirty, ich habe noch keine gute Möglichkeit gefunden wie man nur den 
+% Hintergrund der Section pages ändern kann. Daher ist hier der Hintergrund direkt in die section page integriert.
+% So sollte man es aber, denke ich, nicht machen.
+\defbeamertemplate*{part page}{bfhbeamer}
+{
+  \begin{tikzpicture}
+    \useasboundingbox (0, 0) rectangle (\the\paperwidth,\the\paperheight);
+    \fill[color=bfhgrau] (-\beamer@partpageBoxShift, 3.2) 
+      rectangle (9.7-\beamer@partpageBoxShift, 7.3);
+    \draw[rounded corners=0.2mm, color=bfhorange,fill] (-\beamer@partpageBoxShift, 3.15) 
+      rectangle (9.7-\beamer@partpageBoxShift, 3.25); %unterer Balken
+    \draw[rounded corners=0.2mm, color=bfhorange,fill] (-\beamer@partpageBoxShift, 7.25) 
+      rectangle (9.7-\beamer@partpageBoxShift, 7.35); %unterer Balken
+    \node[anchor=north west] at (0, 6.8) {%
+      \begin{minipage}{95mm}
+        \begin{beamercolorbox}[wd=9.5cm,leftskip=1mm]{Titel}
+          \usebeamerfont{part name}\partname~\insertromanpartnumber
+        \end{beamercolorbox}%
+        \vspace{1em}\par%
+        \begin{beamercolorbox}[wd=9.5cm,leftskip=1mm]{Titel}
+          \usebeamerfont{part title}\insertpart\par%
+        \end{beamercolorbox}%
+      \end{minipage}
+    };
+  \end{tikzpicture}    
+}
+
+\defbeamertemplate*{section page}{bfhbeamer}
+{
+  \begin{tikzpicture}
+    \useasboundingbox (0, 0) rectangle (\the\paperwidth,\the\paperheight);
+    \fill[color=bfhgrau] (-\beamer@partpageBoxShift, 3.2) 
+      rectangle (9.7-\beamer@partpageBoxShift, 7.3);
+    \draw[rounded corners=0.2mm, color=bfhorange,fill] (-\beamer@partpageBoxShift, 3.15) 
+      rectangle (9.7-\beamer@partpageBoxShift, 3.25); %unterer Balken
+    \draw[rounded corners=0.2mm, color=bfhorange,fill] (-\beamer@partpageBoxShift, 7.25) 
+      rectangle (9.7-\beamer@partpageBoxShift, 7.35); %unterer Balken
+    \node[anchor=north west] at (0, 6.8) {%
+      \begin{beamercolorbox}[wd=9.2cm,leftskip=1mm]{Titel}
+        \usebeamerfont{section title}\insertsection\par%
+      \end{beamercolorbox}%
+    };
+  \end{tikzpicture}    
+}
+
+\defbeamertemplate*{subsection page}{bfhbeamer}
+{
+  \begin{tikzpicture}
+    \useasboundingbox (0, 0) rectangle (\the\paperwidth,\the\paperheight);
+    \fill[color=bfhgrau] (-\beamer@partpageBoxShift, 3.2) 
+      rectangle (9.7-\beamer@partpageBoxShift, 7.3);
+    \draw[rounded corners=0.2mm, color=bfhorange,fill] (-\beamer@partpageBoxShift, 3.15) 
+      rectangle (9.7-\beamer@partpageBoxShift, 3.25); %unterer Balken
+    \draw[rounded corners=0.2mm, color=bfhorange,fill] (-\beamer@partpageBoxShift, 7.25) 
+      rectangle (9.7-\beamer@partpageBoxShift, 7.35); %unterer Balken
+    \node[anchor=north west] at (0, 6.8) {%
+      \begin{beamercolorbox}[wd=8.8cm,leftskip=1mm]{Titel}
+        \usebeamerfont{section title}\insertsubsection\par%
+      \end{beamercolorbox}%
+    };
+  \end{tikzpicture}    
+}
+
+
+
+\mode
+<all>
