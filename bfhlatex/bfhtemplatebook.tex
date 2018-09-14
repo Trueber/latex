@@ -41,7 +41,7 @@
 \usepackage[singlelinecheck=off]{caption}
 \usepackage{siunitx} % Scientific Units and number setting
 \usepackage{listings} % For Program-Code
-\usepackage{makeidx}
+\usepackage{makeidx} % indexing
 \usepackage[backend=bibtex,style=ieee]{biblatex}
 \bibliography{mybib}
 
@@ -52,7 +52,7 @@
 % Use Variables \BSc, \Master, etc. for language support
 \type{Bachelor-Thesis}
 % Author(s)
-\author{Max Quax Muster}
+\author{Fabian Wittwer}
 % Title
 \title{Title}
 % Short Title, will be used in the footline
@@ -60,7 +60,7 @@
 % Subtitle
 \subtitle{Subtitle}
 % Titlepicture
-\titlepicture{Elektronik.jpg}
+\titlepicture{elektronik.jpg}
 %%
 
 % Topic of Study
@@ -99,6 +99,7 @@
 
 \begin{document}
 \maketitle
+
 %**************************************************************************
 \frontmatter % preliminary parts
 %**************************************************************************
@@ -106,6 +107,7 @@
 \allowdisplaybreaks
 
 \tableofcontents
+
 \sloppy
 %%%%%%%%%%%%%%%%%%%%%%%%
 % Introduction
@@ -124,7 +126,7 @@ Hier einige Zitate: \cite{Einstein1923}, \cite{NS87a}, \cite{SH96}.
 \section{Text mit mathematischen Formeln}
 \blindmathpaper
 
-Beispiele für Programmlistings:
+Beispiele für\index{Hello} Programmlistings:
 
 Matlab:
 \lstinputlisting[language=Matlab,caption={Beispiel Matlab-Code}]{listing_matlab.m}
@@ -142,7 +144,7 @@ int main(int argc, char* argv[]) {
 \end{lstlisting}
 
 % Floating Objects
-\blindtext
+\blindtext asdf\index{Guggus}
 
 % Example for a Table in BFH-Style with a simple Design
 \begin{table}[ht]
@@ -178,12 +180,12 @@ int main(int argc, char* argv[]) {
 \blindtext
 \begin{figure}[htp]
   \begin{center}
-    \includegraphics[width=10cm]{Elektronik.jpg}
+    \includegraphics[width=10cm]{elektronik.jpg}
   \end{center}
     \caption{Ein Testbild}
   \label{fig:test1}
 \end{figure}
-Erklärender Text für die Abbildung \ref{fig:test1}. Mit
+Erklärender\index{fig} Text für die Abbildung \ref{fig:test1}. Mit
 Fussnotentest\footnote{Fussnote!}
 
 \blindtext
@@ -207,8 +209,9 @@ Fussnotentest\footnote{Fussnote!}
 \printbibliography
 
 %Index
-\addcontentsline{toc}{chapter}{Index}
-%\printindex
+%\addcontentsline{toc}{chapter}{Index}
+\printindex
+
 % Appendices
 \chapter*{Versionskontrolle}
 \renewcommand{\arraystretch}{2} % In order to set the correct linespacing.
@@ -219,7 +222,7 @@ Fussnotentest\footnote{Fussnote!}
   \rowcolors{1}{\seccolor!10}{\seccolor!10} % Rows with 10% of secondary color
   \begin{tabular}{llll}
   \rowcolor{\seccolor!50}
-   Version & Datum & Beschreibung & Autor\\\bfhmidline
+   Version & Datum & Beschreibung\index{asdf} & Autor\\\bfhmidline
     0.1 & 26.02.2013 & Dokument erstellt & Peter Muster\\\bfhmidline
     0.2 & 13.03.2013 & Dokument überarbeitet & Anna Meier\\\bfhmidline
     1.0 & 21.05.2013 & Dokument fertiggestellt & Peter Muster
