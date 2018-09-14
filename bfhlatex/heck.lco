@@ -1,0 +1,7 @@
+\ProvidesFile{heck.lco}[2013/11/21]
+\setkomavar{fromname}{Horst Heck}
+\setkomavar{fromaddress}{Jlcoweg 1\\3400 Burgdorf}
+\setkomavar{fromphone}{+41 \,34 426\, 68\, 40}
+%\setkomavar{backaddress}{Horst Heck\\Jlcoweg 1\\3400 Burgdorf}
+\setkomavar{fromemail}{horst.heck@bfh.ch}
+\setkomavar{signature}{H. Heck}
